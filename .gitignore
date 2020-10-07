@@ -1,0 +1,13 @@
+# Compiled object files and libraries
+*.o
+*.a
+*.lib
+
+# pa1
+PA1/b07901032/bin/*
+PA1/b07901032/inputs/*
+PA1/b07901032/lib/*
+PA1/b07901032/outputs/*
+PA1/b07901032/src/main.cpp
+PA1/b07901032/src/sort_tool.h
+PA1/b07901032/utility/*
