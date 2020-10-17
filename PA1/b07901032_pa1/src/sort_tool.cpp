@@ -7,6 +7,8 @@
 
 #include "sort_tool.h"
 #include<iostream>
+#include<limits>
+#include<vector>
 
 // Constructor
 SortTool::SortTool() {}
@@ -15,11 +17,13 @@ SortTool::SortTool() {}
 void SortTool::InsertionSort(vector<int>& data) {
     // Function : Insertion sort
     // TODO : Please complete insertion sort code here
-    for(int i=1; i<data.length(); i++){
-        int key = data(i);
-        int j = i - 1;
-        while(j>0 && data(j)>key) data(j+1)=data(j--);
-        data(++j) = key;
+    for(int i=1; i<data.size(); i++){
+        int k = data[i];
+        int j = i-1;
+        for(; j>=0 && data[j]>k; j--){
+            data[j+1]=data[j];
+        }
+        data[j+1] = k;
     }
 }
 
@@ -44,15 +48,15 @@ int SortTool::Partition(vector<int>& data, int low, int high) {
     // Function : Partition the vector 
     // TODO : Please complete the function
     // Hint : Textbook page 171
-    int x = data(low);
+    int x = data[low];
     int i=low-1;
     int j=high+1;
     while(1){
-        while(data(j--) <= x) ;
+        while(data[j--] <= x) ;
         j++;
-        while(data(i++) >= x) ;
+        while(data[i++] >= x) ;
         i--;
-        if(i<j) swap(data(i), data(j));
+        if(i<j) swap(data[i], data[j]);
         else return j;
     }
 }
@@ -85,8 +89,13 @@ void SortTool::Merge(vector<int>& data, int low, int middle1, int middle2, int h
     vector<int> L(0, n+1), R(0, m+1);
     for(int i=0; i<n; i++) L[i]=data[low+i];
     for(int i=0; i<m; i++) R[i]=data[middle2+i];
-    L[n] = std::numeric_limitz<int>::max();
-    R[n] = std::numeric_limitz<int>::max();
+    L[n] = std::numeric_limits<int>::max();
+    R[n] = std::numeric_limits<int>::max();
+    int i = 0, j = 0;
+    for(int k = low; k < high; k++){
+        if(L[i] <= R[i]) data[k] = L[i++];
+        else if(data[k] == R[j]) j++;
+    }
 }
 
 // Heap sort method
