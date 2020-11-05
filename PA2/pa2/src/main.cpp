@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<stack>
+#include<vector>
 
 using namespace std;
 
@@ -11,10 +12,8 @@ int main(int argc, char* argv[]) {
     fout.open(argv[2], ios::out);
 	int n;
 	fin >> n;
-	int M[n][n], E[n], T[n][n];
-	std::fill((int*)M, (int*)M+sizeof(M)/sizeof(int), 0);
-	std::fill((int*)E, (int*)E+sizeof(E)/sizeof(int), 0);
-	std::fill((int*)T, (int*)T+sizeof(T)/sizeof(int), 0);
+	vector<vector<int> > M(n, vector<int>(n, 0)), T(n, vector<int>(n, 0));
+	vector<int> E(n, 0);
 	int i, j;
     while(fin >> i >> j) {
         E[i] = j;
@@ -39,12 +38,6 @@ int main(int argc, char* argv[]) {
             M[i][j] = max;
         }
     }
-    for(j = 0; j < n; j++){
-        for(i = 0; i < n; i++){
-            cout << M[j][i] << ", ";
-        }
-        cout << "\n";
-    }
     stack<int> traceback;
     traceback.push(n-1);
     traceback.push(0);
@@ -58,7 +51,7 @@ int main(int argc, char* argv[]) {
                 traceback.push(j-1);
                 traceback.push(i+1);
             }
-            cout << i << ", " << j << "\n";
+            // cout << i << ", " << j << "\n";
         }
         else if(T[i][j] == 1){
             if(M[i][j-1]){
@@ -75,7 +68,7 @@ int main(int argc, char* argv[]) {
                 traceback.push(j-1);
                 traceback.push(E[j]+1);
             }
-            cout << j << ", " << E[j] << "\n";
+            // cout << j << ", " << E[j] << "\n";
         }
     }
 }
