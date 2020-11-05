@@ -4,10 +4,15 @@
 *.lib
 
 # pa1
-PA1/b07901032/bin/*
-PA1/b07901032/inputs/*
-PA1/b07901032/lib/*
-PA1/b07901032/outputs/*
-PA1/b07901032/src/main.cpp
-PA1/b07901032/src/sort_tool.h
-PA1/b07901032/utility/*
+PA1/pa1/bin/*
+PA1/pa1/inputs/*
+PA1/pa1/lib/*
+PA1/pa1/outputs/*
+PA1/pa1/src/main.cpp
+PA1/pa1/src/sort_tool.h
+PA1/pa1/utility/*
+PA1/b07901032_pa1/*
+PA1/b07901032_pa1.tgz
+
+#pa2
+
