@@ -1,0 +1,157 @@
+
+1000000.case1 -IS
+The total CPU time: 133562ms
+memory: 0KB
+1000000.case1 -MS
+The total CPU time: 156.25ms
+memory: 0KB
+1000000.case1 -QS
+The total CPU time: 1296.88ms
+memory: 0KB
+1000000.case1 -HS
+The total CPU time: 171.875ms
+memory: 0KB
+1000000.case2 -IS
+The total CPU time: 15.625ms
+memory: 0KB
+1000000.case2 -MS
+The total CPU time: 78.125ms
+memory: 0KB
+1000000.case2 -QS
+The total CPU time: 1171.88ms
+memory: 0KB
+1000000.case2 -HS
+The total CPU time: 93.75ms
+memory: 0KB
+1000000.case3 -IS
+The total CPU time: 276219ms
+memory: 0KB
+1000000.case3 -MS
+The total CPU time: 93.75ms
+memory: 0KB
+1000000.case3 -QS
+The total CPU time: 1234.38ms
+memory: 0KB
+1000000.case3 -HS
+The total CPU time: 93.75ms
+memory: 0KB
+16000.case1 -IS
+The total CPU time: 31.25ms
+memory: 0KB
+16000.case1 -MS
+The total CPU time: 15.625ms
+memory: 0KB
+16000.case1 -QS
+The total CPU time: 15.625ms
+memory: 0KB
+16000.case1 -HS
+The total CPU time: 0ms
+memory: 0KB
+16000.case2 -IS
+The total CPU time: 0ms
+memory: 0KB
+16000.case2 -MS
+The total CPU time: 0ms
+memory: 0KB
+16000.case2 -QS
+The total CPU time: 15.625ms
+memory: 0KB
+16000.case2 -HS
+The total CPU time: 15.625ms
+memory: 0KB
+16000.case3 -IS
+The total CPU time: 78.125ms
+memory: 0KB
+16000.case3 -MS
+The total CPU time: 0ms
+memory: 0KB
+16000.case3 -QS
+The total CPU time: 31.25ms
+memory: 0KB
+16000.case3 -HS
+The total CPU time: 0ms
+memory: 0KB
+32000.case1 -IS
+The total CPU time: 140.625ms
+memory: 0KB
+32000.case1 -MS
+The total CPU time: 0ms
+memory: 0KB
+32000.case1 -QS
+The total CPU time: 46.875ms
+memory: 0KB
+32000.case1 -HS
+The total CPU time: 0ms
+memory: 0KB
+32000.case2 -IS
+The total CPU time: 0ms
+memory: 0KB
+32000.case2 -MS
+The total CPU time: 0ms
+memory: 0KB
+32000.case2 -QS
+The total CPU time: 31.25ms
+memory: 0KB
+32000.case2 -HS
+The total CPU time: 15.625ms
+memory: 0KB
+32000.case3 -IS
+The total CPU time: 281.25ms
+memory: 0KB
+32000.case3 -MS
+The total CPU time: 0ms
+memory: 0KB
+32000.case3 -QS
+The total CPU time: 46.875ms
+memory: 0KB
+32000.case3 -HS
+The total CPU time: 0ms
+memory: 0KB
+4000.case1 -IS
+The total CPU time: 0ms
+memory: 0KB
+4000.case1 -MS
+The total CPU time: 0ms
+memory: 0KB
+4000.case1 -QS
+The total CPU time: 0ms
+memory: 0KB
+4000.case1 -HS
+The total CPU time: 0ms
+memory: 0KB
+4000.case2 -IS
+The total CPU time: 0ms
+memory: 0KB
+4000.case2 -MS
+The total CPU time: 0ms
+memory: 0KB
+4000.case2 -QS
+The total CPU time: 0ms
+memory: 0KB
+4000.case2 -HS
+The total CPU time: 0ms
+memory: 0KB
+4000.case3 -IS
+The total CPU time: 0ms
+memory: 0KB
+4000.case3 -MS
+The total CPU time: 0ms
+memory: 0KB
+4000.case3 -QS
+The total CPU time: 15.625ms
+memory: 0KB
+4000.case3 -HS
+The total CPU time: 0ms
+memory: 0KB
+5.case1 -IS
+The total CPU time: 0ms
+memory: 0KB
+5.case1 -MS
+The total CPU time: 0ms
+memory: 0KB
+5.case1 -QS
+The total CPU time: 0ms
+memory: 0KB
+5.case1 -HS
+The total CPU time: 0ms
+memory: 0KB

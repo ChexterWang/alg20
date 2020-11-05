@@ -1,0 +1,76 @@
+// **************************************************************************
+//  File       [main.cpp]
+//  Author     [Yu-Hao Ho]
+//  Synopsis   [The main program of 2019 fall Algorithm PA1]
+//  Modify     [2020/9/15 Mu-Ting Wu]
+// **************************************************************************
+
+#include <cstring>
+#include <iostream>
+#include <cstdlib>
+#include "../lib/tm_usage.h"
+#include "sort_tool.h"
+
+using namespace std;
+
+int random(int a){
+    srand(time(NULL));
+    return rand()%a;
+}
+
+void sorter(int mode, vector<int>& data, long& total_time){
+    
+    SortTool tool;
+    CommonNs::TmUsage tmusg;
+    CommonNs::TmStat stat;
+
+    tmusg.periodStart();
+    if(mode == 1) tool.InsertionSort(data);
+    else if(mode == 2) tool.MergeSort(data);
+    else if(mode == 3) tool.QuickSort(data);
+    else tool.HeapSort(data);
+    tmusg.getPeriodUsage(stat);
+    // cout << "(" << total_time << ", " << stat.uTime + stat.sTime << ")\n";
+    total_time = (stat.uTime+stat.sTime+total_time)/2;
+
+}
+
+
+int main(int argc, char* argv[])
+{
+
+    long size[] = {100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000};
+
+    vector<int> _data;
+    while(_data.size()<2000000) _data.push_back(random(10000000));
+    SortTool NTUSortTool;
+
+    cout << ", IS, MS, QS, HS\n";
+
+    for(int i = 0; i < 13; i++){
+
+        cout << size[i];
+
+        for(int k = 1; k < 5; k++){
+
+            long total = 0;
+        
+            for(int j = 0; j < 2000000/size[i]; j++){
+            
+                vector<int> __data(_data.begin()+j*size[i], _data.begin()+(j+1)*size[i]-1);
+                vector<int> data(__data);
+                
+                sorter(k, data, total);
+            
+            }
+
+            // cout << ", " << total*size[i]/2000000;
+            cout << ", " << total;
+
+        }
+
+        cout << "\n";
+
+   }
+
+}
