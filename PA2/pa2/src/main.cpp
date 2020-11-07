@@ -2,6 +2,7 @@
 #include<fstream>
 #include<stack>
 #include<vector>
+#include<sstream>
 
 using namespace std;
 
@@ -39,6 +40,7 @@ int main(int argc, char* argv[]) {
         }
     }
     stack<int> traceback;
+	vector<int> chosen(n, 0);
     traceback.push(n-1);
     traceback.push(0);
     while(!traceback.empty()){
@@ -51,7 +53,8 @@ int main(int argc, char* argv[]) {
                 traceback.push(j-1);
                 traceback.push(i+1);
             }
-            // cout << i << ", " << j << "\n";
+			chosen[i] = j;
+			chosen[j] = i;
         }
         else if(T[i][j] == 1){
             if(M[i][j-1]){
@@ -68,7 +71,19 @@ int main(int argc, char* argv[]) {
                 traceback.push(j-1);
                 traceback.push(E[j]+1);
             }
-            // cout << j << ", " << E[j] << "\n";
+			chosen[j] = E[j];
+			chosen[E[j]] = j;
         }
     }
+	stringstream ss;
+	j = 0;
+	for(i = 0; i < n; i++){
+		if(chosen[i]) {
+			ss << i << ' ' << chosen[i] << '\n';
+			j++;
+			chosen[chosen[i]] = 0;
+		}
+	}
+	fout << j << '\n';
+	fout << ss.str();
 }
