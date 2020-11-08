@@ -6,6 +6,14 @@
 
 using namespace std;
 
+int _type(vector<vector<int> >& M, vector<int>& E, int i, int j){
+	int max = 0, k = E[j];
+	if(k == i)	return 0;
+	else		max = M[i][j-1];
+	if(k > i && k < j && M[i][k-1]+M[k+1][j-1]+1 > max) return 2;
+	return 1;
+}
+
 int main(int argc, char* argv[]) {
     if(argc != 3) return 0;
     fstream fin(argv[1]);
@@ -13,7 +21,8 @@ int main(int argc, char* argv[]) {
     fout.open(argv[2], ios::out);
 	int n;
 	fin >> n;
-	vector<vector<int> > M(n, vector<int>(n, 0)), T(n, vector<int>(n, 0));
+	vector<vector<int> > M(n, vector<int>(n, 0));
+//	vector<vector<int> > T(n, vector<int>(n, 0));
 	vector<int> E(n, 0);
 	int i, j;
     while(fin >> i >> j) {
@@ -26,15 +35,15 @@ int main(int argc, char* argv[]) {
             int max = 0, k = E[j];
             if(k == i){
                 max =  M[i+1][j-1]+1;
-                T[i][j] = 0;
+//				T[i][j] = 0;
             }
             else{
                 max = M[i][j-1];
-                T[i][j] = 1;
+//				T[i][j] = 1;
             }
             if(k > i && k < j && M[i][k-1]+M[k+1][j-1]+1 > max) {
                 max = M[i][k-1]+M[k+1][j-1]+1; 
-                T[i][j] = 2;
+//				T[i][j] = 2;
             } 
             M[i][j] = max;
         }
@@ -48,7 +57,8 @@ int main(int argc, char* argv[]) {
         traceback.pop();
         j = traceback.top();
         traceback.pop();
-        if(T[i][j] == 0){
+//		if(T[i][j] == 0){
+		if(_type(M,E,i,j)==0){
             if(M[i+1][j-1]){
                 traceback.push(j-1);
                 traceback.push(i+1);
@@ -56,7 +66,8 @@ int main(int argc, char* argv[]) {
 			chosen[i] = j;
 			chosen[j] = i;
         }
-        else if(T[i][j] == 1){
+//		else if(T[i][j] == 1){
+		if(_type(M,E,i,j)==1){
             if(M[i][j-1]){
                 traceback.push(j-1);
                 traceback.push(i);
