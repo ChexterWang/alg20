@@ -29,6 +29,28 @@ int m(vector<vector<int> >& M, vector<int>& E, int i, int j){
 	}
 }
 
+void _m(queue<int>& q, vector<int>& e, int i, int j, int depth){
+//	cout << i << ", " << j << ", " << depth << "\n";
+	if(i >= j) return;
+	if(depth == 5){
+		q.push(i);
+		q.push(j);
+		return;
+	}
+	int k = e[j];
+	if(k == i) {
+		_m(q, e, i+1, j-1, depth+1);
+		return;
+	}
+
+	_m(q, e, i, j-1, depth+1);
+
+	if(k > j || k < i) return;
+
+	_m(q, e, i, k-1, depth+1); 
+	_m(q, e, k+1, j-1, depth+1);
+}
+
 int _type(vector<vector<int> >& M, vector<int>& E, int i, int j){
 	int max = 0, k = E[j];
 	if(k == i)	return 0;
@@ -54,11 +76,23 @@ int main(int argc, char* argv[]) {
 			M[i][j] = -1;
 		}
 	}
+	cout << "initialized...\n";
 	while(fin >> i >> j){
 		E[i] = j;
 		E[j] = i;
 	}
-
+	cout << "file has been read in...\n";	
+	queue<int> q;
+	_m(q, E, 0, n-1, 0);
+	cout << "queue size = " << q.size() << "\n";
+	while(!q.empty()){
+		i = q.front();
+		q.pop();
+		j = q.front();
+		q.pop();
+		cout << i << ", " << j << "\n";
+//		m(M, E, i, j);
+	}
 	m(M, E, 0, n-1);
 	
 	queue<int> trace;

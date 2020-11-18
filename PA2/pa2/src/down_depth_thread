@@ -3,8 +3,18 @@
 #include<queue>
 #include<vector>
 #include<sstream>
+#include<thread>
+#include<algorithm>
 
 using namespace std;
+
+struct Interval{
+	int s, f;
+};
+
+bool compareInterval(Interval i1, Interval i2){
+	return (i1.f<i2.f);
+}
 
 int m(vector<vector<int> >& M, vector<int>& E, int i, int j){
 	int k = E[j];
@@ -27,6 +37,32 @@ int m(vector<vector<int> >& M, vector<int>& E, int i, int j){
 		M[i][j-i] = p;
 		return p;
 	}
+}
+
+void _m(vector<Interval>& q, vector<int>& e, int i, int j, int depth){
+//	cout << i << ", " << j << ", " << depth << "\n";
+	if(i >= j) return;
+	if(depth == 4){
+		struct Interval in;
+		in.s = i;
+		in.f = j;
+		q.push_back(in);
+		return;
+	}
+	int k = e[j];
+	if(k == i) {
+		_m(q, e, i+1, j-1, depth);
+		return;
+	}
+
+	if(k > j || k < i) {
+		_m(q, e, i, j-1, depth);
+		return;
+	}
+
+	_m(q, e, i, k-1, depth+1); 
+	_m(q, e, k+1, j-1, depth+1);
+	_m(q, e, i, j-1, depth+1);
 }
 
 int _type(vector<vector<int> >& M, vector<int>& E, int i, int j){
@@ -54,9 +90,33 @@ int main(int argc, char* argv[]) {
 			M[i][j] = -1;
 		}
 	}
+	cout << "initialized...\n";
 	while(fin >> i >> j){
 		E[i] = j;
 		E[j] = i;
+	}
+	cout << "file has been read in...\n";
+
+	vector<Interval> q;
+	_m(q, E, 0, n-1, 0);
+	vector<bool> qb(q.size(), false);
+	sort(q.begin(), q.end(), compareInterval);
+	cout << "queue size = " << q.size() << "\n";
+	vector<thread> th;
+	
+	while(!qb.back()){
+		int last = 0; 
+		for(int k=0; k<q.size(); k++){
+			if(qb[k]) continue;
+			if(q[k].s >= last){
+				th.push_back(thread(bind(&m, M, E, q[k].s, q[k].f)));
+				last = q[k].f;
+				qb[k] = true;
+			}
+		}
+		cout << th.size() << "\n";
+		for(auto& t: th) t.join(); 
+		th.clear();
 	}
 
 	m(M, E, 0, n-1);

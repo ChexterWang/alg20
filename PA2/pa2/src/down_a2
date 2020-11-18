@@ -1,0 +1,137 @@
+#include<iostream>
+#include<fstream>
+#include<vector>
+#include<queue>
+#include<sstream>
+
+using namespace std;
+
+class A{
+public:
+	unsigned int operator() (int j){
+		unsigned int ret = i[j];
+		ret += ((r&(1<<(15-j)))>>(15-j))<<16;
+		return ret;
+	}
+	void operator() (int j, int num){
+		r = (num>>16) ? r|(1<<(15-j)) : r&(~0-(1<<(15-j)));
+		i[j] = num&((1<<16)-1);
+	}
+	bool operator[] (int j){
+		return ((b&(1<<(15-j)))>>(15-j)) ? true : false;
+	}
+	void operator() (int j, bool num){
+		b = (num) ? b|(1<<(15-j)) : b&(~0-(1<<(15-j)));
+	}
+private:
+	unsigned short i[16] = {0};
+	unsigned short r = 0, b = 0;
+};
+
+int m(int i, int j){
+	if(i >= j) return 0;
+	unsigned short q = (j-i)>>4, r = (j-i)&((1<<4)-1);
+	extern vector<vector<A> > M;
+	extern vector<int> E;
+	if(M[i][q][r]) return M[i][q](r);
+	//cout << i << ", " << j << '\n';
+	//cout << ((j-i)>>4) << ", " << ((j-i)&((1<<4)-1)) << '\n';
+	unsigned int k = E[j];
+	if(k == i)
+		M[i][q](r, m(i+1, j-1)+1);
+	else if(k > j || k < i)
+		M[i][q](r, m(i, j-1));
+	else{
+		int u = m(i, j-1), v = m(i, k-1) + m(k+1, j-1)+1;
+		if(u < v) M[i][q](r, v);
+		else M[i][q](r, u);
+	}
+	M[i][q](r, true);
+	//cout << ((M[i][q][r]) ? "true\n" : "bad\n");
+	return M[i][q](r);
+}
+
+int _type(int i, int j){
+	extern vector<int> E;
+	int max = 0, k = E[j];
+	if(k == i)	return 0;
+	else		max = m(i, j-1);
+	if(k>i && k<j && m(i, k-1)+m(k+1, j-1)+1 > max) return 2;
+	return 1;
+}
+
+vector<int> E;
+vector<vector<A> > M;
+
+int main(int argc, char* argv[]) {
+    
+	if(argc != 3) return 0;
+    fstream fin(argv[1]);
+    fstream fout;
+    fout.open(argv[2], ios::out);
+	
+	int n, i, j;
+	fin >> n;
+	vector<int> chosen(n, 0);
+	E.resize(n, 0);
+	M.resize(n, vector<A>());
+	for(i = 0; i < n; i++){
+		A a;
+		for(int k = 0; k < 16; k++) a(k, false);
+		M[i].resize(((n-i)>>4)+1, a);
+	}
+	while(fin >> i >> j){
+		E[i] = j;
+		E[j] = i;
+	}
+
+	m(0, n-1);
+	
+	queue<int> trace;
+	trace.push(0);
+	trace.push(n-1);
+	while(!trace.empty()){
+		i = trace.front();
+		trace.pop();
+		j = trace.front();
+		trace.pop();
+		if(_type(i,j)==0){
+			if(m(i+1,j-1)){
+				trace.push(i+1);
+				trace.push(j-1);
+			}
+			chosen[i] = j;
+			chosen[j] = i;
+		}
+		else if(_type(i,j)==1){
+			if(m(i,j-1)){
+				trace.push(i);
+				trace.push(j-1);
+			}
+		}
+		else{
+			if(m(i,E[j]-1)){
+				trace.push(i);
+				trace.push(E[j]-1);
+			}
+			if(m(E[j]+1,j-1)){
+				trace.push(E[j]+1);
+				trace.push(j-1);
+			}
+			chosen[j] = E[j];
+			chosen[E[j]] = j;
+		}
+	}
+
+	stringstream ss;
+	j = 0;
+	for(i = 0; i < n; i++){
+		if(chosen[i]) {
+			ss << i << ' ' << chosen[i] << '\n';
+			j++;
+			chosen[chosen[i]] = 0;
+		}
+	}
+	fout << j << '\n';
+	fout << ss.str();
+}
