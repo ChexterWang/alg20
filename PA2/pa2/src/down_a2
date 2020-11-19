@@ -34,8 +34,6 @@ int m(int i, int j){
 	extern vector<vector<A> > M;
 	extern vector<int> E;
 	if(M[i][q][r]) return M[i][q](r);
-	//cout << i << ", " << j << '\n';
-	//cout << ((j-i)>>4) << ", " << ((j-i)&((1<<4)-1)) << '\n';
 	unsigned int k = E[j];
 	if(k == i)
 		M[i][q](r, m(i+1, j-1)+1);
@@ -47,7 +45,6 @@ int m(int i, int j){
 		else M[i][q](r, u);
 	}
 	M[i][q](r, true);
-	//cout << ((M[i][q][r]) ? "true\n" : "bad\n");
 	return M[i][q](r);
 }
 
@@ -76,9 +73,7 @@ int main(int argc, char* argv[]) {
 	E.resize(n, 0);
 	M.resize(n, vector<A>());
 	for(i = 0; i < n; i++){
-		A a;
-		for(int k = 0; k < 16; k++) a(k, false);
-		M[i].resize(((n-i)>>4)+1, a);
+		M[i].resize(((n-i)>>4)+1, A());
 	}
 	while(fin >> i >> j){
 		E[i] = j;

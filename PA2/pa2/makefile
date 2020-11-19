@@ -1,7 +1,7 @@
 CC=g++
 CFLAG=-c
 DBGFLAGS=-g
-OPTFLAGS=-O2
+OPTFLAGS=-Ofast
 STD=-std=c++11
 
 all: bin/mps bin/mps.dbg
