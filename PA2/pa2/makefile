@@ -6,7 +6,7 @@ STD=-std=c++11
 
 all: bin/mps
 
-debug: bin/mps.dbg
+debug: bin/mps.dbg bin/mps
 
 bin/mps: src/main.cpp
 	$(CC) $(OPTFLAGS) $(STD) $< -o $@
