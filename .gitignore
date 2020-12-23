@@ -14,7 +14,13 @@ PA1/pa1/utility/*
 PA1/b07901032_pa1/*
 PA1/b07901032_pa1.tgz
 
-#pa2
+# pa2
 PA2/pa2/inputs/*
 PA2/pa2/outputs/*
 PA2/pa2/bin/*
+
+# pa3
+PA3/pa3/inputs
+PA3/pa3/out
+PA3/pa3/bin
+
