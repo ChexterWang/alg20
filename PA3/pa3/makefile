@@ -1,18 +1,18 @@
 CC=g++
-CFLAG=-c
-DBGFLAGS=-g
-OPTFLAGS=-Ofast
 STD=-std=c++11
+obj=main.o solver.o
 
 all: bin/cb
 
 debug: bin/cb.dbg bin/cb
 
-bin/cb: src/main.cpp
-	$(CC) $(OPTFLAGS) $(STD) $< -o $@
+bin/cb: $(obj)
+	$(CC) -O3 $(STD) $(obj) -o $@
+bin/cb.dbg: $(obj)
+	$(CC) -g $(STD) $(obj) -o $@
 
-bin/cb.dbg: src/main.cpp
-	$(CC) $(DBGFLAGS) $(STD) $< -o $@
+%.o: src/%.cpp
+	$(CC) -c $^ -o $@
 
 clean:
 	rm -rf *.o bin/*

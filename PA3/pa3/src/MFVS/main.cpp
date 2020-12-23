@@ -1,6 +1,5 @@
 #include<iostream>
 #include<fstream>
-#include<sstream>
 #include "solver.h"
 
 using namespace std;
@@ -32,17 +31,9 @@ int main(int argc, char* argv[]){
 	}
 //	cout << p->isWeighted() << "\n";
 	
-	k = 0;
-	(*p).solve();
-	vector<Adj> ret = p->getRet();
-	stringstream ss;
-	for(i = 0; i < ret.size(); ++i){
-		for(j = 0; j < ret[i].size(); ++j){
-			ss << i << ' ' << ret[i][j].first << ' ' << ret[i][j].second << '\n';
-			k += ret[i][j].second;
-		}
+	if(_type == 'd'){
+		dsolver* dptr = (dsolver*) p;
+		dptr->reduction();
 	}
-	fout << k << '\n';
-	fout << ss.str();
 
 }
