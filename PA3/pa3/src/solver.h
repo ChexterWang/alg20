@@ -6,6 +6,21 @@ using namespace std;
 
 typedef vector<pair<int, int> > Adj;
 
+class disjointSet;
+class solver;
+class dsolver;
+class usolver;
+
+class disjointSet {
+public:
+    disjointSet(int i);
+    void makeSet();
+    int findSet(int x);
+    void Union(int x, int y);
+private:
+    int *rank, *parent, n;
+};
+
 class solver{
 
 public:
