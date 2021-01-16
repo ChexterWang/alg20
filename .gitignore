@@ -3,6 +3,14 @@
 *.a
 *.lib
 
+# pa3
+PA3/pa3/.vscode
+
+# pa2
+PA2/pa2/inputs/*
+PA2/pa2/outputs/*
+PA2/pa2/bin/*
+
 # pa1
 PA1/pa1/bin/*
 PA1/pa1/inputs/*
@@ -13,14 +21,3 @@ PA1/pa1/src/sort_tool.h
 PA1/pa1/utility/*
 PA1/b07901032_pa1/*
 PA1/b07901032_pa1.tgz
-
-# pa2
-PA2/pa2/inputs/*
-PA2/pa2/outputs/*
-PA2/pa2/bin/*
-
-# pa3
-PA3/pa3/inputs
-PA3/pa3/out
-PA3/pa3/bin
-PA3/pa3/.vscode

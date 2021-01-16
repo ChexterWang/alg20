@@ -15,4 +15,4 @@ bin/cb.dbg: $(obj)
 	$(CC) -c $^ -o $@
 
 clean:
-	rm -rf *.o bin/*
+	rm -rf *.o bin/* out/*

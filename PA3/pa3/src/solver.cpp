@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<utility>
+#include<sstream>
 #include "solver.h"
 
 using namespace std;
@@ -8,25 +9,26 @@ using namespace std;
 typedef vector<pair<int, int> > Adj;
 
 /* -- function for disjointSet -- */
-disjointSet::disjointSet(int i)
-{
+disjointSet::disjointSet(int i) {
 	rank = new int[i];
 	parent = new int[i];
 	n = i;
 	makeSet();
 }
 
-void disjointSet::makeSet()
-{ for (int i = 0; i < n; i++) parent[i] = i; }
+void disjointSet::makeSet(){
+	for (int i = 0; i < n; i++){
+		parent[i] = i;
+		rank[i] = 0;
+	}
+}
 
-int disjointSet::findSet(int x)
-{
+int disjointSet::findSet(int x) {
 	if (parent[x] != x) parent[x] = findSet(parent[x]);
 	return parent[x];
 }
 
-void disjointSet::Union(int x, int y)
-{
+void disjointSet::Union(int x, int y) {
 	int xset = findSet(x);
 	int yset = findSet(y);
 	if      (xset == yset) return;
@@ -39,6 +41,11 @@ void disjointSet::Union(int x, int y)
 }
 
 /* -- function for usolver -- */
+
+int comp(const void* a, const void* b){
+	return ((edge*)a)->w < ((edge*)b)->w;
+}
+
 void usolver::solve() {
 	/* 
 	*  The minimum feedback arc set for undirected graph is
@@ -47,11 +54,31 @@ void usolver::solve() {
 	*  rithm since we can use non-comparison sort for cases
 	*  that have maximum input number.
 	*/
-
+	int x = 0, y = 0;
+	edge next;
+	qsort(e, getE(), sizeof(edge), comp);
+	disjointSet d = disjointSet(getV());
+	for(int i = 0; i < getE();) {
+		next = e[i++];
+		x = d.findSet(next.s);
+		y = d.findSet(next.d);
+		if(x != y){
+			b[i-1] = false;
+			d.Union(x, y);
+		}
+	}
 }
 
 string usolver::result(){
-
+	stringstream ss;
+	int w = 0;
+	for(int i = 0; i < getE(); ++i){
+		if(b[i]){
+			ss << e[i].s << ' ' << e[i].d << ' ' << e[i].w << '\n';
+			w += e[i].w;
+		}
+	}
+	return to_string(w) + "\n" + ss.str();
 }
 
 /* -- function for dsolver -- */

@@ -1,7 +1,6 @@
 #include<iostream>
 #include<vector>
 #include<utility>
-#include<sstream>
 
 using namespace std;
 
@@ -15,7 +14,7 @@ class usolver;
 
 class edge {
 public:
-	int s, d, w;
+	int s=0, d=0, w=0;
 };
 
 class disjointSet {
@@ -50,20 +49,23 @@ class usolver : public solver{
 public:
 	usolver(int _v, int _e) : solver(_v, _e) {
 		e = new edge[_e];
+		b = new bool[_e];
 	}
 	void operator () (int _i, int _j, int _w){
 		// cout << "u " << _i << ", " << _j << ", " << _w << '\n';
 		if(_w!=1) setW();
-		e[edgeAdded].s = _i;
-		e[edgeAdded].d = _j;
-		e[edgeAdded++].w = _w;
+		e[j].s = _i;
+		e[j].d = _j;
+		e[j++].w = _w;
+		b[j] = true;
 	}
 	void solve();
 	string result();
 
 private:
-	int edgeAdded = 0;
-	edge* e;
+	int j = 0;
+	edge *e;
+	bool *b;
 };
 
 
