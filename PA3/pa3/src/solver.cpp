@@ -50,6 +50,10 @@ void usolver::solve() {
 
 }
 
+string usolver::result(){
+
+}
+
 /* -- function for dsolver -- */
 void dsolver::print() {
 	int icnt = 0, ocnt = 0;
@@ -76,4 +80,18 @@ void dsolver::print() {
 
 void dsolver::solve() {
 	;
+}
+
+string dsolver::result() {
+	stringstream ss;
+	int k = 0;
+	for(int i = 0; i < ret.size(); ++i){
+		for(int j = 0; j < ret[i].size(); ++j){
+			ss << i << ' ' << ret[i][j].first << ' ' << ret[i][j].second << '\n';
+			k += ret[i][j].second;
+		}
+	}
+	string ret = to_string(k);
+	ret += ss.str();
+	return ret;
 }

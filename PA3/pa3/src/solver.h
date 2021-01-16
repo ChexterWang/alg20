@@ -1,15 +1,22 @@
 #include<iostream>
 #include<vector>
 #include<utility>
+#include<sstream>
 
 using namespace std;
 
 typedef vector<pair<int, int> > Adj;
 
+class edge;
 class disjointSet;
 class solver;
 class dsolver;
 class usolver;
+
+class edge {
+public:
+	int s, d, w;
+};
 
 class disjointSet {
 public:
@@ -24,15 +31,10 @@ private:
 class solver{
 
 public:
-	solver(int _v, int _e) : v(_v), e(_e), w(false) {
-		ret.resize(_v, Adj());
-	}
+	solver(int _v, int _e) : v(_v), e(_e), w(false) {}
 	virtual void operator () (int _i, int _j, int _w) {}
-	void add(int _i, int _j, int _w) {
-		ret[_i].push_back(pair<int, int>(_j, _w));
-	}
 	virtual void solve() {}
-	vector<Adj> getRet() { return ret; }
+	virtual string result(){}
 	int getV() { return v; }
 	int getE() { return e; }
 	void setW() { w = true; }
@@ -41,20 +43,27 @@ public:
 private:
 	int v, e;
 	bool w;
-	vector<Adj> ret;
 };
 
 class usolver : public solver{
 
 public:
-	usolver(int _v, int _e) : solver(_v, _e) {}
+	usolver(int _v, int _e) : solver(_v, _e) {
+		e = new edge[_e];
+	}
 	void operator () (int _i, int _j, int _w){
-//		cout << "u " << _i << ", " << _j << ", " << _w << '\n';
+		// cout << "u " << _i << ", " << _j << ", " << _w << '\n';
 		if(_w!=1) setW();
+		e[edgeAdded].s = _i;
+		e[edgeAdded].d = _j;
+		e[edgeAdded++].w = _w;
 	}
 	void solve();
+	string result();
 
 private:
+	int edgeAdded = 0;
+	edge* e;
 };
 
 
@@ -66,15 +75,17 @@ public:
 		out.resize(_v, Adj());
 	}
 	void operator () (int _i, int _j, int _w){
-//		cout << "d " << _i << ", " << _j << ", " << _w << '\n';
+		// cout << "d " << _i << ", " << _j << ", " << _w << '\n';
 		if(_w!=1) setW();
 		in[_j].push_back(pair<int, int>(_i, _w));
 		out[_i].push_back(pair<int, int>(_j, _w));
 	}
 	void print();
 	void solve();
+	string result();
 	
 private:
 	vector<Adj> in;
 	vector<Adj> out;
+	vector<Adj> ret;
 };
