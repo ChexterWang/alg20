@@ -14,7 +14,7 @@ class usolver;
 
 class edge {
 public:
-	int s=0, d=0, w=0;
+	int s, d, w;
 };
 
 class disjointSet {
@@ -47,7 +47,7 @@ private:
 class usolver : public solver{
 
 public:
-	usolver(int _v, int _e) : solver(_v, _e) {
+	usolver(int _v, int _e) : solver(_v, _e), j(0) {
 		e = new edge[_e];
 		b = new bool[_e];
 	}
@@ -63,7 +63,7 @@ public:
 	string result();
 
 private:
-	int j = 0;
+	int j;
 	edge *e;
 	bool *b;
 };

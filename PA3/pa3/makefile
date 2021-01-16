@@ -12,7 +12,7 @@ bin/cb.dbg: $(obj)
 	$(CC) -g $(STD) $(obj) -o $@
 
 %.o: src/%.cpp
-	$(CC) -c $^ -o $@
+	$(CC) -c $^ $(STD) -o $@
 
 clean:
 	rm -rf *.o bin/* out/*

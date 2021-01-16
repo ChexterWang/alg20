@@ -2,6 +2,8 @@
 #include<vector>
 #include<utility>
 #include<sstream>
+#include<cstdlib>
+#include<string>
 #include "solver.h"
 
 using namespace std;
@@ -118,7 +120,5 @@ string dsolver::result() {
 			k += ret[i][j].second;
 		}
 	}
-	string ret = to_string(k);
-	ret += ss.str();
-	return ret;
+	return to_string(k) + '\n' + ss.str();
 }
