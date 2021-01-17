@@ -1,10 +1,7 @@
-#include<iostream>
 #include<fstream>
 #include "solver.h"
 
 using namespace std;
-
-typedef vector<pair<int, int> > Adj;
 
 int main(int argc, char* argv[]){
 	
@@ -21,16 +18,10 @@ int main(int argc, char* argv[]){
 	fin >> e;
 
 	solver* p;
-	if(_type == 'u')
-		p = (solver*) new usolver(v, e);
-	else if(_type == 'd')
-		p = (solver*) new dsolver(v, e);
+	if(_type == 'u') p = (solver*) new usolver(v, e);
+	else if(_type == 'd') p = (solver*) new dsolver(v, e);
 	
-	while(fin >> i >> j >> k){
-		(*p).operator()(i, j, k);
-	}
-	
-	k = 0;
+	while(fin >> i >> j >> k) (*p)(i, j, k);
 	(*p).solve();
 	fout << (*p).result();
 }
