@@ -4,6 +4,7 @@
 #include<sstream>
 #include<cstdlib>
 #include<string>
+#include<deque>
 #include "solver.h"
 
 using namespace std;
@@ -107,18 +108,100 @@ void dsolver::print() {
 	cout << "\n" << icnt << ", " << ocnt << "\n";
 }
 
+void dsolver::deleteSource(vector<Adj>& _i, vector<Adj>& _o, int k){
+	for(int j = 0; j < _o[k].size(); ++j){
+		vector<pair<int, int> >::iterator it;
+		int p = _o[k][j].first;
+		for(int m = 0; m < _i[p].size(); ++m){
+			if(_i[p][m].first == k){
+				_i[p][m] = _i[p][_i[p].size()-1];
+				_i[p].pop_back();
+				break;
+			}
+		}
+	}
+	_o[k] = Adj();
+}
+
+void dsolver::deleteSink(vector<Adj>& _i, vector<Adj>& _o, int k){
+	for(int j = 0; j < _i[k].size(); ++j){
+		int p = _i[k][j].first;
+		for(int m = 0; m < _o[p].size(); ++m){
+			if(_o[p][m].first == k){
+				_o[p][m] = _o[p][_o[p].size()-1];
+				_o[p].pop_back();
+				break;
+			}
+		}
+	}
+	_i[k] = Adj();
+}
+
 void dsolver::solve() {
-	;
+	bool containSink = true, containSource = true;
+	deque<int> s1, s2, G;
+	vector<Adj> _i = in, _o = out;
+	for(int i = 0; i < getV(); ++i) G.push_back(i);
+	while(!G.empty()){
+		while(containSink){
+			containSink = false;
+			for(deque<int>::iterator i = G.begin(); i != G.end();){
+				if(!sink(_i, _o, *i)){ ++i; continue; }
+				s2.push_front(*i);
+				deleteSink(_i, _o, *i);
+				i = G.erase(i);
+				containSink = true;
+			}
+		}
+		while(containSource){
+			containSource = false;
+			for(deque<int>::iterator i = G.begin(); i != G.end();){
+				if(!source(_i, _o, *i)){ ++i; continue; }
+				s1.push_back(*i);
+				deleteSource(_i, _o, *i);
+				i = G.erase(i);
+				containSource = true;
+			}
+		}
+		deque<int>::iterator maxIt = G.begin();
+		int  maxDelta = 0;
+		for(deque<int>::iterator i = G.begin(); i != G.end(); ++i){
+			if(delta(_i, _o, *i) > maxDelta){
+				maxIt = i;
+				maxDelta - delta(_i, _o, *i);
+			}
+		}
+		s1.push_back(*maxIt);
+		deleteSink(_i, _o, *maxIt);
+		deleteSource(_i, _o, *maxIt);
+		G.erase(maxIt);
+	}
+	while(!s1.empty()){
+		s.push_back(s1.front());
+		s1.pop_front();
+	}
+	while(!s2.empty()){
+		s.push_back(s2.front());
+		s2.pop_front();
+	}
 }
 
 string dsolver::result() {
-	stringstream ss;
+	vector<int> ss;
+	stringstream sss;
 	int k = 0;
-	for(int i = 0; i < ret.size(); ++i){
-		for(int j = 0; j < ret[i].size(); ++j){
-			ss << i << ' ' << ret[i][j].first << ' ' << ret[i][j].second << '\n';
-			k += ret[i][j].second;
+	ss.resize(getV(), 0);
+	for(int i = 0; i < s.size(); ++i){
+		cout << i << ", " << s[i] << '\n';
+		ss[s[i]] = i;
+	}
+	for(int i = 0; i < s.size(); ++i){
+		for(int j = 0; j < out[s[i]].size(); ++j){
+			if(ss[out[s[i]][j].first] < i){
+				sss << s[i] << ' ' << out[s[i]][j].first << ' ' << out[s[i]][j].second << '\n';
+				k += out[s[i]][j].second;
+			}
 		}
 	}
-	return to_string(k) + '\n' + ss.str();
+	return to_string(k) + '\n' + sss.str();
 }
