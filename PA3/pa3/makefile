@@ -4,7 +4,7 @@ _obj=_main.o _solver.o
 
 all: bin/cb
 
-debug: bin/cb.dbg
+d: bin/cb.dbg
 
 bin/cb: $(obj)
 	$(CC) -O3 $(obj) -o $@
@@ -20,5 +20,5 @@ _main.o: src/main.cpp
 _solver.o: src/solver.cpp
 	$(CC) -g -c $^ -o $@
 
-clean:
+c:
 	rm -rf *.o bin/* out/*

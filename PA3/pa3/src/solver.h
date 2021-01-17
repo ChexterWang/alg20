@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<utility>
+#include<deque>
 
 using namespace std;
 
@@ -87,7 +88,19 @@ public:
 	string result();
 	
 private:
-	vector<Adj> in;
-	vector<Adj> out;
-	vector<Adj> ret;
+	int indeg(vector<Adj>& _i, int k){ return _i[k].size(); }
+	int outdeg(vector<Adj>& _o, int k){ return _o[k].size(); }
+	int delta(vector<Adj>& _i, vector<Adj>& _o, int k) {
+		return outdeg(_o, k) - indeg(_i, k);
+	}
+	bool sink(vector<Adj>& _i, vector<Adj>& _o, int k) {
+		return (indeg(_i, k)>0) && (outdeg(_o, k)==0);
+	}
+	bool source(vector<Adj>& _i, vector<Adj>& _o, int k) {
+		return (outdeg(_o, k)>0) && (indeg(_i, k)==0);
+	}
+	void deleteSource(vector<Adj>& _i, vector<Adj>& _o, int k);
+	void deleteSink(vector<Adj>& _i, vector<Adj>& _o, int k);
+	vector<Adj> in, out, ret;
+	deque<int> s;
 };
